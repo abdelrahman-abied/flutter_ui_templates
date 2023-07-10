@@ -1,31 +1,57 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui_template/shake_widget_animation.dart/shake_home_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_ui_template/internet_connectivity/state/connectivity_state.dart';
+
+import 'flutter_animation/adapter_view.dart';
 
 void main() {
-  runApp(const MyApp());
+  final container = ProviderContainer();
+  runApp(
+    UncontrolledProviderScope(
+      container: container,
+      child: MyApp(),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends ConsumerWidget {
+  MyApp({super.key});
+  final _scaffoldkey = GlobalKey<ScaffoldMessengerState>();
 
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(connectivityStatusProviders, (previous, next) {
+      if (previous != next) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _scaffoldkey.currentState?.hideCurrentSnackBar();
+          _scaffoldkey.currentState?.showSnackBar(
+            SnackBar(
+              content: Text(
+                ref.read(connectivityStatusProviders) == ConnectivityStatus.isConnected
+                    ? 'Is Connected to Internet'
+                    : 'Is Disconnected from Internet',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                ),
+              ),
+              backgroundColor:
+                  ref.read(connectivityStatusProviders) == ConnectivityStatus.isConnected
+                      ? Colors.green
+                      : Colors.red,
+            ),
+          );
+        });
+      }
+    });
+
     return MaterialApp(
+      scaffoldMessengerKey: _scaffoldkey,
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: ShakeHomeScreen(),
+      home: InfoView(),
     );
   }
 }
