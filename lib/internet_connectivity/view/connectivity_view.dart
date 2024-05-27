@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_ui_template/internet_connectivity/state/connectivity_state.dart';
 
+import '../../otp_design.dart/otp_home_screen.dart';
+
 class ConnectivityView extends ConsumerStatefulWidget {
   const ConnectivityView({super.key});
 
@@ -62,13 +64,23 @@ class _ConnectivityViewState extends ConsumerState<ConnectivityView> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text(
-                connectivityStatusProvider == ConnectivityStatus.isConnected
-                    ? 'Is Connected to Internet'
-                    : 'Is Disconnected from Internet',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.0,
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => OtpVerificationView(),
+                    ),
+                  );
+                },
+                child: Text(
+                  connectivityStatusProvider == ConnectivityStatus.isConnected
+                      ? 'Is Connected to Internet'
+                      : 'Is Disconnected from Internet',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                  ),
                 ),
               )
             ],

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_ui_template/internet_connectivity/state/connectivity_state.dart';
 
-import 'flutter_animation/adapter_view.dart';
+import 'internet_connectivity/view/connectivity_view.dart';
 
 void main() {
   final container = ProviderContainer();
@@ -51,7 +51,7 @@ class MyApp extends ConsumerWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: InfoView(),
+      home: ConnectivityView(),
     );
   }
 }

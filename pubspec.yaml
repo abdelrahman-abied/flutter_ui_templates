@@ -42,7 +42,7 @@ dependencies:
   pinput: ^2.2.16
   connectivity_plus: ^4.0.1
   riverpod: ^2.3.6
-  flutter_animate: ^4.2.0
+  flutter_animate: ^4.2.0+1
 
 dev_dependencies:
   flutter_test:
