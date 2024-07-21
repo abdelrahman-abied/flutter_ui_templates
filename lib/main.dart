@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_ui_template/internet_connectivity/state/connectivity_state.dart';
-
-import 'internet_connectivity/view/connectivity_view.dart';
+import 'package:flutter_ui_template/shared_timer/shared_downtimer.dart';
+import 'package:flutter_ui_template/theme/app_theme.dart';
+import 'package:flutter_ui_template/theme/theme_extansions.dart';
 
 void main() {
   final container = ProviderContainer();
@@ -37,8 +38,8 @@ class MyApp extends ConsumerWidget {
               ),
               backgroundColor:
                   ref.read(connectivityStatusProviders) == ConnectivityStatus.isConnected
-                      ? Colors.green
-                      : Colors.red,
+                      ? Theme.of(context).colorTheme.primaryColor
+                      : Theme.of(context).colorTheme.secondaryColor,
             ),
           );
         });
@@ -48,10 +49,14 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       scaffoldMessengerKey: _scaffoldkey,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      theme: AppTheme.lightTheme, // <-- Light theme value
+      darkTheme: AppTheme.darkTheme, // <-- Dark theme value
+      themeMode: ThemeMode.dark,
+      navigatorKey: navigatorKey,
+      home: Scaffold(
+        body: SharedTimerWidget(),
       ),
-      home: ConnectivityView(),
     );
   }
 }
+final navigatorKey = GlobalKey<NavigatorState>();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_ui_template/internet_connectivity/state/connectivity_state.dart';
+import 'package:flutter_ui_template/theme/theme_extansions.dart';
 
 import '../../otp_design.dart/otp_home_screen.dart';
 
@@ -56,12 +57,17 @@ class _ConnectivityViewState extends ConsumerState<ConnectivityView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'Connectivity Status',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
+              Container(
+                decoration: BoxDecoration(
+                  gradient: Theme.of(context).appGradientTheme.backgroundGradient,
+                ),
+                child: const Text(
+                  'Connectivity Status',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               TextButton(
